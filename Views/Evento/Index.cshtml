@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Eventos.Models.Evento>
+
+@{
+    ViewData["Title"] = "Lista de Eventos";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="background-image: linear-gradient(to left, #33ffcc, #CCFF99);">
+    <div class="container col-lg-8 mt-4">
+        <div class="card p-4">
+            <h1 class="text-center mb-4">Lista de Eventos</h1>
+
+            <!-- Botões Criar Evento e Criar Participante -->
+            <div class="d-flex justify-content-between mb-3">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">Criar Novo Evento</button>
+                <a class="btn btn-primary" asp-action="Index" asp-controller="Participante">Área do Participante</a>
+            </div>
+
+            <!-- Tabela de Eventos -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.EventoID">Editar</a>
+                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.EventoID">Detalhes</a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.EventoID">Excluir</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Criar Novo Evento -->
+    <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createEventModalLabel">Criar Novo Evento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="@Url.Action("Create", "Evento")">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Nome do Evento -->
+                        <div class="mb-3">
+                            <label for="nomeEvento" class="form-label">Nome do Evento</label>
+                            <input type="text" id="nomeEvento" name="Nome" class="form-control" required />
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Criar Evento</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

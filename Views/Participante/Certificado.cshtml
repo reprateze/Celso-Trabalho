@@ -1,0 +1,129 @@
+﻿@model Eventos.Models.Participante
+
+@{
+    ViewData["Title"] = "Certificado de Participação";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Importação da Fonte Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f3f3f3;
+        }
+
+        .certificate-container {
+            width: 800px;
+            height: 600px;
+            border: 10px solid #333;
+            padding: 30px;
+            background: white;
+            margin: auto;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-top: 50px; /* Adicionando espaçamento entre o cabeçalho e o certificado */
+        }
+
+        .border-deco {
+            border: 5px solid #777;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: -1;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            font-size: 20px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Great Vibes', cursive;
+            color: #222;
+            margin: 10px 0;
+        }
+
+        .event {
+            font-size: 22px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .footer {
+            font-size: 16px;
+            margin-top: 50px;
+            color: #777;
+        }
+
+        .signature {
+            margin-top: 40px;
+            font-size: 18px;
+            font-family: 'Great Vibes', cursive;
+            font-weight: bold;
+            border-top: 2px solid #000;
+            display: inline-block;
+            padding-top: 5px;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="certificate-container">
+        <div class="border-deco"></div>
+
+        <div class="title">
+            CERTIFICADO DE PARTICIPAÇÃO
+        </div>
+
+        <div class="content">
+            <p>Certificamos que</p>
+            <h2 class="name">@Model.Nome</h2>
+            <p>participou do evento</p>
+            <h3 class="event">@Model.Evento.Nome</h3>
+        </div>
+
+        <div class="footer">
+            <p>Data de Emissão: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+        </div>
+
+        <div class="signature">
+            Assinatura do Organizador
+        </div>
+    </div>
+
+    <!-- Botão para voltar, fora do certificado -->
+    <div class="back-button">
+        <button class="btn btn-secondary" onclick="window.location.href='@Url.Action("Index", "Participante")'">Voltar para a Lista de Participantes</button>
+    </div>
+
+</body>
+</html>
