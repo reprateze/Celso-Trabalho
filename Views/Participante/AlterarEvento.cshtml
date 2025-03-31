@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
 
-    <!-- Bootstrap CSS (CDN) -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -20,19 +20,19 @@
         <div class="card p-4">
             <h1 class="text-center mb-4">Alterar Evento do Participante</h1>
 
-            <!-- Formulário para alterar o evento do participante -->
+           
             <form asp-action="AlterarEvento" method="post">
-                @Html.AntiForgeryToken()  <!-- Proteção CSRF -->
-                <!-- Campo oculto para o ID do participante -->
+                @Html.AntiForgeryToken()  
+                
                 <input type="hidden" asp-for="ParticipanteID" />
 
-                <!-- Exibe o nome do participante (não alterável) -->
+              
                 <div class="mb-3">
                     <label class="form-label">Nome do Participante</label>
                     <input type="text" class="form-control" value="@Model.Nome" readonly />
                 </div>
 
-                <!-- Dropdown para selecionar o novo evento -->
+               
                 <div class="mb-3">
                     <label for="EventoID" class="form-label">Selecione o Evento</label>
                     <select asp-for="EventoID" class="form-control" asp-items="ViewBag.EventoID" required>
@@ -41,7 +41,7 @@
                     <span asp-validation-for="EventoID" class="text-danger"></span>
                 </div>
 
-                <!-- Botões de ação -->
+                
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>

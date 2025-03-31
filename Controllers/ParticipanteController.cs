@@ -5,6 +5,8 @@
     using X.PagedList.Mvc.Core;
     using X.PagedList;
     using X.PagedList.Extensions;
+    using System.Drawing.Imaging;
+    using System.Drawing;
 
     namespace Eventos.Controllers
     {
@@ -18,49 +20,49 @@
             }
 
 
-        public IActionResult Index(int pagina = 1)
-        {
-            // Carregar os eventos da base de dados
-            var eventos = context.Eventos.ToList();  // Aqui você carrega todos os eventos
-
-            // Passar a lista de eventos para a ViewBag
-            ViewBag.Eventos = eventos;
-
-            // Carregar os participantes e paginar
-            var participantes = context.Participantes
-                .Include(p => p.Evento) // Carrega os eventos relacionados
-                .OrderBy(p => p.Nome)
-                .ToPagedList(pagina, 5);
-
-            return View(participantes); // Aqui você retorna a lista de participantes para a View
-        }
-
-
-
-        public IActionResult Create()
+            public IActionResult Index(int pagina = 1)
             {
-                // Utiliza uma Viewbag para gerar uma lista com os nomes dos eventos
+               
+                var eventos = context.Eventos.ToList();  
+
+               
+                ViewBag.Eventos = eventos;
+
+                
+                var participantes = context.Participantes
+                    .Include(p => p.Evento) 
+                    .OrderBy(p => p.Nome)
+                    .ToPagedList(pagina, 5);
+
+                return View(participantes); 
+            }
+
+
+
+            public IActionResult Create()
+            {
+                
                 ViewBag.EventoID = new SelectList(context.Eventos
                     .OrderBy(e => e.Nome), "EventoID", "Nome");
                 return View();
             }
 
-        [HttpPost]
-        public IActionResult Create(Participante participante)
-        {
-            
-            
-                // Adiciona o participante ao contexto de banco de dados
+            [HttpPost]
+            public IActionResult Create(Participante participante)
+            {
+
+
+              
                 context.Participantes.Add(participante);
                 context.SaveChanges();
                 return RedirectToAction("Index");
-            
 
-            // Se os dados forem inválidos, repassa o formulário com os erros
-            return View(participante);
-        }
 
-        public IActionResult Details(int id)
+                
+                return View(participante);
+            }
+
+            public IActionResult Details(int id)
             {
                 var participante = context.Participantes
                     .Include(p => p.Evento)
@@ -78,7 +80,7 @@
             [HttpPost]
             public IActionResult Edit(Participante participante)
             {
-                // Informa à EF que o registro será modificado
+                
                 context.Entry(participante).State = EntityState.Modified;
                 context.SaveChanges();
                 return RedirectToAction("Index");
@@ -98,12 +100,12 @@
                 context.Participantes.Remove(participante);
                 context.SaveChanges();
                 return RedirectToAction("Index");
-        }
+            }
 
         public IActionResult Certificado(int id)
         {
             var participante = context.Participantes
-                .Include(p => p.Evento)  // Inclui os dados do evento relacionado
+                .Include(p => p.Evento)  
                 .FirstOrDefault(p => p.ParticipanteID == id);
 
             if (participante == null)
@@ -111,40 +113,87 @@
                 return NotFound();
             }
 
-            return View(participante);
+            
+            return GerarCertificado(participante.Nome, participante.Evento.Nome);
         }
+
+        private IActionResult GerarCertificado(string nomeParticipante, string nomeEvento)
+        {
+            
+            string caminhoBase = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "celso.jpg");
+
+            
+            if (!System.IO.File.Exists(caminhoBase))
+            {
+                throw new FileNotFoundException($"Imagem base do certificado não encontrada em {caminhoBase}");
+            }
+
+          
+            using (Bitmap imagem = new Bitmap(caminhoBase))
+            {
+                using (Graphics g = Graphics.FromImage(imagem))
+                {
+                   
+                    Font fonte = new Font("Arial", 24, FontStyle.Bold);
+                    Brush pincel = Brushes.Black;
+
+                    
+                    PointF pontoNome = new PointF(1050, 1550);  
+                    PointF pontoEvento = new PointF(850, 1815); 
+
+                    
+                    g.DrawString(nomeParticipante, fonte, pincel, pontoNome);
+
+                    
+                    g.DrawString(nomeEvento, fonte, pincel, pontoEvento);
+                }
+
+               
+                using (var ms = new MemoryStream())
+                {
+                   
+                    imagem.Save(ms, ImageFormat.Jpeg);
+                    ms.Seek(0, SeekOrigin.Begin);
+
+                    
+                    return File(ms.ToArray(), "image/jpeg");
+                }
+            }
+        }
+
+
         // Ação para editar o evento de um participante
         // Método para editar o evento do participante
         public IActionResult AlterarEvento(int id)
-        {
-            // Buscar o participante a ser editado
-            var participante = context.Participantes
-                .Include(p => p.Evento)  // Incluir evento associado
-                .FirstOrDefault(p => p.ParticipanteID == id);
+            {
+                // Buscar o participante a ser editado
+                var participante = context.Participantes
+                    .Include(p => p.Evento)  // Incluir evento associado
+                    .FirstOrDefault(p => p.ParticipanteID == id);
 
-           
-               // Caso o participante não exista
-            
 
-            // Passar os eventos para o dropdown
-            ViewBag.EventoID = new SelectList(context.Eventos.OrderBy(e => e.Nome), "EventoID", "Nome", participante.EventoID);
+                // Caso o participante não exista
 
-            return View(participante);
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AlterarEvento(Participante participante)
-        {
-            
-            
+                // Passar os eventos para o dropdown
+                ViewBag.EventoID = new SelectList(context.Eventos.OrderBy(e => e.Nome), "EventoID", "Nome", participante.EventoID);
+
+                return View(participante);
+            }
+
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public IActionResult AlterarEvento(Participante participante)
+            {
+
+
                 // Busca o participante existente
                 var participanteExistente = context.Participantes
                     .FirstOrDefault(p => p.ParticipanteID == participante.ParticipanteID);
 
-                
-                     // Se o participante não for encontrado
-                
+
+                // Se o participante não for encontrado
+
 
                 // Atualiza o evento do participante
                 participanteExistente.EventoID = participante.EventoID;
@@ -154,18 +203,15 @@
 
                 // Redireciona de volta para a página de listagem de participantes
                 return RedirectToAction("Index");
-            
 
-            // Caso o ModelState não seja válido, ou seja, algum erro de validação,
-            // repassa a lista de eventos novamente para o dropdown e retorna à view
-            ViewBag.EventoID = new SelectList(context.Eventos.OrderBy(e => e.Nome), "EventoID", "Nome", participante.EventoID);
-            return View(participante); // Retorna para a view com os erros de validação
+
+                // Caso o ModelState não seja válido, ou seja, algum erro de validação,
+                // repassa a lista de eventos novamente para o dropdown e retorna à view
+                ViewBag.EventoID = new SelectList(context.Eventos.OrderBy(e => e.Nome), "EventoID", "Nome", participante.EventoID);
+                return View(participante); // Retorna para a view com os erros de validação
+            }
+
         }
 
     }
-
-
-
-
-}
 

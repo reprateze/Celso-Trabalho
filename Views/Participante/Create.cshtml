@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
 
-    <!-- Bootstrap CSS (CDN) -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -18,39 +18,39 @@
         <div class="card p-4">
             <h1 class="text-center mb-4">Cadastro de Participante</h1>
             <form asp-action="Create" method="post">
-                @Html.AntiForgeryToken() <!-- Proteção CSRF -->
-                <!-- Campo Nome -->
+                @Html.AntiForgeryToken() 
+                
                 <div class="mb-3">
                     <label for="nomeParticipante" class="form-label">Nome do Participante</label>
                     <input type="text" id="nomeParticipante" name="Nome" placeholder="Digite o nome do participante" class="form-control" required>
                 </div>
 
 
-                <!-- Campo Data de Nascimento -->
+               
                 <div class="mb-3">
                     <label for="dataNascimento" class="form-label">Data de Nascimento</label>
                     <input type="date" id="dataNascimento" name="DataNascimento" class="form-control" required>
                 </div>
                
-                <!-- Campo Email -->
+              
                 <div class="mb-3">
                     <label for="emailParticipante" class="form-label">Email</label>
                     <input type="email" id="emailParticipante" name="Email" placeholder="Digite o email" class="form-control" required>
                 </div>
 
-                <!-- Campo Telefone -->
+               
                 <div class="mb-3">
                     <label for="telefoneParticipante" class="form-label">Telefone</label>
                     <input type="tel" id="telefoneParticipante" name="Telefone" placeholder="Digite o telefone" class="form-control" required>
                 </div>
 
-                <!-- Campo CPF -->
+                
                 <div class="mb-3">
                     <label for="cpfParticipante" class="form-label">CPF</label>
                     <input type="text" id="cpfParticipante" name="CPF" placeholder="Digite o CPF" class="form-control" required>
                 </div>
 
-                <!-- Botão de Enviar -->
+             
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Cadastrar Participante</button>
                 </div>

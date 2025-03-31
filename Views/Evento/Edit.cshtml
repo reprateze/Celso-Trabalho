@@ -20,8 +20,8 @@
         <div class="card p-4">
             <h1 class="text-center mb-4">Editar Evento</h1>
             <form asp-action="Edit" method="post">
-                @Html.AntiForgeryToken() <!-- Proteção CSRF -->
-                <input type="hidden" asp-for="EventoID" /> <!-- Campo oculto para o ID do evento -->
+                @Html.AntiForgeryToken() 
+                <input type="hidden" asp-for="EventoID" />
 
                 <div class="mb-3">
                     <label for="nomeEvento" class="form-label">Nome do Evento</label>

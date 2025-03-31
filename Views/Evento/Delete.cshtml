@@ -1,27 +1,48 @@
 ﻿@model Eventos.Models.Evento
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Excluir Evento";
 }
 
-<h1>Delete</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Evento</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="EventoID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="background-image: linear-gradient(to left, #33ffcc, #CCFF99);">
+    <div class="container col-lg-6 mt-5">
+        <div class="card p-4">
+            <h1 class="text-center text-danger mb-4">Excluir Evento</h1>
+
+            <h3 class="text-center">Tem certeza que deseja excluir este evento?</h3>
+            <div class="mt-4">
+                <h4>Evento</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-3 fw-bold">
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Nome)
+                    </dd>
+                </dl>
+            </div>
+
+            <form asp-action="Delete" class="text-center mt-3">
+                <input type="hidden" asp-for="EventoID" />
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

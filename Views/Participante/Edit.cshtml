@@ -20,10 +20,10 @@
         <div class="card p-4">
             <h1 class="text-center mb-4">Editar Participante</h1>
 
-            <!-- Formulário de Edição -->
+            
             <form asp-action="Edit" method="post">
-                @Html.AntiForgeryToken() <!-- Proteção CSRF -->
-                <input type="hidden" asp-for="ParticipanteID" /> <!-- Campo oculto para o ID do participante -->
+                @Html.AntiForgeryToken() 
+                <input type="hidden" asp-for="ParticipanteID" /> 
 
                 <div class="mb-3">
                     <label for="nomeParticipante" class="form-label">Nome do Participante</label>
@@ -39,35 +39,35 @@
                     <span asp-validation-for="EventoID" class="text-danger"></span>
                 </div>
 
-                <!-- Campo Data de Nascimento -->
+                
                 <div class="mb-3">
                     <label for="dataNascimento" class="form-label">Data de Nascimento</label>
                     <input type="date" id="dataNascimento" asp-for="DataNascimento" class="form-control" required>
                     <span asp-validation-for="DataNascimento" class="text-danger"></span>
                 </div>
 
-                <!-- Campo Email -->
+               
                 <div class="mb-3">
                     <label for="emailParticipante" class="form-label">Email</label>
                     <input type="email" id="emailParticipante" asp-for="Email" class="form-control" required>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
-                <!-- Campo Telefone -->
+               
                 <div class="mb-3">
                     <label for="telefoneParticipante" class="form-label">Telefone</label>
                     <input type="tel" id="telefoneParticipante" asp-for="Telefone" class="form-control" required>
                     <span asp-validation-for="Telefone" class="text-danger"></span>
                 </div>
 
-                <!-- Campo CPF -->
+                
                 <div class="mb-3">
                     <label for="cpfParticipante" class="form-label">CPF</label>
                     <input type="text" id="cpfParticipante" asp-for="CPF" class="form-control" required>
                     <span asp-validation-for="CPF" class="text-danger"></span>
                 </div>
 
-                <!-- Botões -->
+                
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>

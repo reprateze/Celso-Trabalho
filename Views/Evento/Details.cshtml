@@ -23,7 +23,7 @@
                 <li class="list-group-item"><strong>Quantidade de Participantes:</strong> @Model.Participantes?.Count</li>
             </ul>
 
-            <!-- Barra de Pesquisa -->
+          
             <form method="get" asp-action="Details" asp-route-id="@Model.EventoID" class="mt-4">
                 <div class="input-group">
                     <input type="text" name="searchString" class="form-control" placeholder="Pesquisar participantes..." />
@@ -31,7 +31,7 @@
                 </div>
             </form>
 
-            <!-- Lista de Participantes -->
+          
             <h3 class="mt-4">Participantes</h3>
             <ul class="list-group">
                 @foreach (var participante in Model.Participantes)
